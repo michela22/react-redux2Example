@@ -1,23 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+//come accedo ai dati nello store? attraverso un Hook -->lo useSelector
+import {useSelector, useDispatch} from 'react-redux';
+//per associare le actions e assegnargli la dispatch di invio uso bindActionCreators
+import {bindActionCreators} from'redux';
+import { actionCreators } from './state';
+
+//Credit: https://www.youtube.com/watch?v=9jULHSe41ls
 
 function App() {
+
+  const account = useSelector((state) => state.account);
+  const dispatch = useDispatch();
+
+  const {depositMoney, withdrawMoney} = bindActionCreators(actionCreators, dispatch)
+
+
+  console.log(account);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{account}</h1>
+      <button onClick={()=>depositMoney(100)}>Deposit Money</button>
+      <button onClick={()=>withdrawMoney(100)}>Withdraw Money</button>
+     
     </div>
   );
 }
